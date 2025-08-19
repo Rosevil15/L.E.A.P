@@ -2,9 +2,9 @@ import React, { useState } from 'react';
 import { 
   IonButton, IonCard, IonCardContent, IonCol, IonContent, 
   IonGrid, IonInput, IonInputPasswordToggle, IonPage, IonRow, 
-  IonTitle 
+  IonTitle, useIonRouter
 } from '@ionic/react';
-import { supabase } from '../supabaseClient';   // adjust path if needed
+import { supabase } from "../utils/supabaseClients"; // adjust path if needed
 
 const Register: React.FC = () => {
   const [username, setUsername] = useState("");
@@ -16,6 +16,8 @@ const Register: React.FC = () => {
   const [password, setPassword] = useState("");
   const [confirmPassword, setConfirmPassword] = useState("");
 
+  const router = useIonRouter(); // 🚀 Ionic router
+
   const handleRegister = async () => {
     if (password !== confirmPassword) {
       alert("Passwords do not match!");
@@ -25,22 +27,35 @@ const Register: React.FC = () => {
     const { data, error } = await supabase.auth.signUp({
       email,
       password,
-      options: {
-        data: {
-          username,
-          firstname,
-          lastname,
-          age,
-          address
-        }
-      }
     });
 
     if (error) {
       alert("Error: " + error.message);
-    } else {
-      alert("Registration successful! Please check your email to confirm.");
-      console.log("User:", data.user);
+      return;
+    }
+
+    if (data.user) {
+      // Insert into profiles
+      const { error: insertError } = await supabase
+        .from("profiles")
+        .insert([
+          {
+            id: data.user.id,
+            username,
+            first_name: firstname, // ✅ match DB schema
+            last_name: lastname,
+            age: age ? parseInt(age) : null,
+            address,
+          },
+        ]);
+
+      if (insertError) {
+        console.error("Profile insert error:", insertError.message);
+        alert("Profile insert failed: " + insertError.message);
+      } else {
+        alert("Registration successful! Please check your email.");
+        router.push("/login", "forward"); // ✅ navigate to login
+      }
     }
   };
 
