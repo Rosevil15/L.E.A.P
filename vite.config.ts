@@ -6,11 +6,11 @@ import { defineConfig } from 'vite'
 
 // https://vitejs.dev/config/
 export default defineConfig({
+  base: './',  // ✅ use this for Netlify builds
   plugins: [
     react(),
     legacy()
   ],
-  base:"LEAP",
   test: {
     globals: true,
     environment: 'jsdom',
