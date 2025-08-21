@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { 
-  IonButton, IonCard, IonCardContent, IonCol, IonContent, IonGrid, 
+  IonButton, IonCard, IonCardContent, IonCol, IonContent, IonAvatar, IonGrid, 
   IonIcon, IonInput, IonInputPasswordToggle, IonPage, IonRow, 
   useIonLoading, useIonRouter 
 } from '@ionic/react';
@@ -42,9 +42,46 @@ const Login: React.FC = () => {
             <IonCol size="12" size-md="8" size-lg="6" size-xl="4">
               <IonCard>
                 <IonCardContent>
-                  <div style={{ display: "flex", flexDirection: "column", alignItems: "center", marginBottom: "20px" }}>
-                    <img src={logo} alt="capstone logo" style={{ width: "30vw", maxWidth: "220px", minWidth: "120px" }} />
-                  </div>
+                <div
+  style={{
+    display: "flex",
+    flexDirection: "column",
+    alignItems: "center",
+    marginBottom: "20px", // spacing from LEAP+logo block to the form
+  }}
+>
+  {/* Logo + LEAP grouped */}
+  <div
+    style={{
+      display: "flex",
+      flexDirection: "column",
+      alignItems: "center",
+    }}
+  >
+    <img
+      src={logo}
+      alt="capstone logo"
+      style={{
+        width: "200px",
+        height: "auto",
+        marginBottom: "0px", // ✅ this ONLY affects spacing between logo & LEAP
+      }}
+    />
+    <h2
+      style={{
+        margin: 0,
+        fontSize: "2rem", // bigger LEAP
+        color: "#007bff",   // or exact logo blue
+        fontWeight: "bold",
+        letterSpacing: "4px",
+      }}
+    >
+      L E A P
+    </h2>
+  </div>
+</div>
+
+
 
                   {/* ✅ Login Form */}
                   <form onSubmit={doLogin}>
