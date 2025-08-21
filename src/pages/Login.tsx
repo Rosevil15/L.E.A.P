@@ -57,6 +57,7 @@ const Login: React.FC = () => {
                         minWidth: "120px",
                         height: "auto",
                         marginBottom: "20px",
+                        background: 'transparent',
                       }}
                     />
                   </div>
