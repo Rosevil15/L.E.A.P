@@ -42,8 +42,8 @@ const Register: React.FC = () => {
           {
             id: data.user.id,
             username,
-            first_name: firstname, // ✅ match DB schema
-            last_name: lastname,
+            firstname: firstname, // ✅ match DB schema
+            lastname: lastname,
             age: age ? parseInt(age) : null,
             address,
           },
